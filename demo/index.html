@@ -28,6 +28,8 @@
     });
 
     var markersPlugin = player.getPlugin('markers-plugin');
+
+
    document.getElementById('save').onclick = () => {
        markersPlugin.getAll().forEach((maker)=>{
            console.log('Marker - start:', maker.getTime(), ' duration:', maker.getDuration())

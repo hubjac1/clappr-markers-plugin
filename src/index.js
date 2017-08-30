@@ -146,12 +146,13 @@ export default class MarkersPlugin extends UICorePlugin {
 
     var $tooltip = marker.getTooltipEl()
     if ($tooltip) {
+      console.log('there is a tooltip')
       $tooltip = $($tooltip)
     }
     return {
       source: marker,
       emitter: marker.getEmitter(),
-      $marker: $(marker.getMarkerEl()),
+      $marker: marker.getMarkerEl(),
       markerLeft: null,
       $tooltip: $tooltip,
       $tooltipContainer: null,
@@ -196,11 +197,17 @@ export default class MarkersPlugin extends UICorePlugin {
       e.preventDefault()
       e.stopImmediatePropagation()
     })
-    this._$markers.append($marker)
+      debugger
+      console.log('ici')
+      console.log($marker)
+      console.log(this._$markers)
+    this._$markers.appendChild($marker)
 
     // tooltip
     var $tooltip = marker.$tooltip;
     if ($tooltip) {
+      debugger
+        console.log('there is a tooltip')
       // there is a tooltip
       let $tooltipContainer = $("<div />").addClass("tooltip-container")
       marker.$tooltipContainer = $tooltipContainer
@@ -293,11 +300,14 @@ export default class MarkersPlugin extends UICorePlugin {
   }
 
   render() {
-    this._$markers = $("<div />").addClass("markers-plugin-markers")
-    this._$tooltips = $("<div />").addClass("markers-plugin-tooltips")
-    var $el = $(this.el)
-    $el.append(this._$markers)
-    $el.append(this._$tooltips)
+    this._$markers = document.createElement('div');
+    this._$markers.classList.add("markers-plugin-markers");
+
+    this._$tooltips = document.createElement('div');
+    this._$tooltips.classList.add("markers-plugin-tooltips");
+
+    this.el.appendChild(this._$markers)
+    this.el.appendChild(this._$tooltips)
     this._appendElToMediaControl()
     return this
   }
