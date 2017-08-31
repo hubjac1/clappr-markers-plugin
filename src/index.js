@@ -197,16 +197,11 @@ export default class MarkersPlugin extends UICorePlugin {
       e.preventDefault()
       e.stopImmediatePropagation()
     })
-      debugger
-      console.log('ici')
-      console.log($marker)
-      console.log(this._$markers)
     this._$markers.appendChild($marker)
 
     // tooltip
     var $tooltip = marker.$tooltip;
     if ($tooltip) {
-      debugger
         console.log('there is a tooltip')
       // there is a tooltip
       let $tooltipContainer = $("<div />").addClass("tooltip-container")

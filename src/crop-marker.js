@@ -15,7 +15,6 @@ export default class CropMarker extends BaseMarker {
 	constructor (time, duration) {
 		super(time)
 		this._duration = duration || 5
-        this.externalBuildMarker = null;
 	}
 
   /*
@@ -98,9 +97,7 @@ export default class CropMarker extends BaseMarker {
     }
 
     _buildMarkerEl () {
-        if(this.externalBuildMarker){
-            return this.externalBuildMarker();
-        } else {
+        if (typeof(jQuery) !== 'undefined') {
             var $marker = $('<div />').addClass('crop-marker')
 
             $marker.append($('<div id="wgrip"/>').addClass('crop-marker-handle').addClass('ui-resizable-handle').addClass('ui-resizable-w').addClass('left'))
