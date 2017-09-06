@@ -11,17 +11,18 @@
   <input type="button" id="add" value="add marker">
   <input type="button" id="save" value="save">
   <input type="button" id="clear" value="clear">
+  <input type="button" id="frag" value="frag">
   <script>
- var aMarker = new ClapprMarkersPlugin.CropMarker(80,10)
+ var aMarker = new ClapprMarkersPlugin.CropMarker(5,5)
    var player = new Clappr.Player({
-    	source: "http://tjenkinson.me/clappr-thumbnails-plugin/assets/video.mp4",
+    	source: "./data/index.m3u8", //"http://tjenkinson.me/clappr-thumbnails-plugin/assets/video.mp4",
     	parentId: "#player",
     	plugins: {
         core: [ClapprMarkersPlugin],
       },
       markersPlugin: {
         markers: [
-          new ClapprMarkersPlugin.CropMarker(10,10),
+          new ClapprMarkersPlugin.CropMarker(0,3),
             aMarker
         ]
       }
@@ -45,6 +46,11 @@
    };
    document.getElementById('clear').onclick = () => {
        markersPlugin.clearMarkers();
+   };
+   document.getElementById('frag').onclick = () => {
+       markersPlugin.getAll().forEach((maker)=>{
+           console.log('Marker - :', maker.getHlsFragments(true))
+       });
    };
   </script>
 </body>

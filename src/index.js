@@ -53,7 +53,6 @@ export default class MarkersPlugin extends UICorePlugin {
    */
   addMarker(marker) {
     var internalMarker = this._buildInternalMarker(marker)
-      marker.videoDuration =  this._duration;
     this._markers.push(internalMarker)
     this._createMarkerEl(internalMarker)
     this._renderMarkers()
@@ -149,6 +148,9 @@ export default class MarkersPlugin extends UICorePlugin {
       console.log('there is a tooltip')
       $tooltip = $($tooltip)
     }
+      marker.videoDuration =  this._duration;
+      marker.core = this.core;
+
     return {
       source: marker,
       emitter: marker.getEmitter(),

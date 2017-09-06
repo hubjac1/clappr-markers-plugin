@@ -15,6 +15,7 @@ export default class CropMarker extends BaseMarker {
 	constructor (time, duration) {
 		super(time)
 		this._duration = duration || 5
+        this.core = undefined;
 	}
 
   /*
@@ -124,5 +125,42 @@ export default class CropMarker extends BaseMarker {
             return $marker[0]
         }
 	}
+
+	getHlsFragments(updateToFit=false) {
+        try {
+
+            var playback = this.core.getCurrentPlayback()
+            if(playback.name === 'hls') {
+                var videoHlsLevels = playback._hls.levels;
+            } else {
+                throw new Error('this video does not contains fragments')
+            }
+            var fragments = videoHlsLevels[0].details.fragments
+            var startTime = this.getTime();
+            var endTime = this.getDuration() + startTime;
+
+            var coversFragments = fragments.filter((frag)=>{
+                var midTs = frag.start + frag.duration/2;
+                return (startTime < midTs) && (endTime > midTs)
+            });
+            if (updateToFit){
+                startTime = coversFragments[0].start
+                this.setTime(startTime)
+                var lastFrag = coversFragments[coversFragments.length - 1]
+                this.setDuration(lastFrag.endDTS - startTime)
+            }
+            return coversFragments.map((frag) => frag.relurl)
+
+        }catch (e){
+            if(this._fitToChunk) {
+                console.error('error in getting HLS chunk')
+                console.error(e.message);
+            } else{
+                //ignor error
+            }
+            return []
+
+        }
+    }
 
 }
